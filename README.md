@@ -1,7 +1,7 @@
 # Imperial-Messengers
 Solution to "Imperial Messengers" problem
 
-This program is hard-coded to read input from a file “input.txt” and output a solution to the Imperial Messengers challenge.
+This program is reads a text file as input and outputs a solution to the Imperial Messengers challenge.
 
 Imperial Messengers challenge:
 An empire has certain number of cities and has a network of limitless messengers set up between the cities. The challenge is to find the least amount of time required for all cities to receive the message.
