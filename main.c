@@ -6,35 +6,34 @@
 //  Copyright © 2020 Han. All rights reserved.
 //
 
+#include <limits.h>
+#include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <math.h>
-#include <limits.h>
 
 //Function declarations
 typedef struct node node;
-void init(char* file);
+void init(void);
 int SendMessengers(void);
-bool MsgSpread(node* cities);
 int CityWithLeastTravelTime(node* cities);
 int getNumElements(int n);
 int getIndex(int i, int j);
 
-//Number of cities: n
 //Adjacency array: adjArr
-int n;
+//Number of cities: n
 int *adjArr;
+int n;
 
 int main(int argc, const char * argv[]) {
-    init("input.txt");
+    init();
     printf("%d\n", SendMessengers());
     return 0;
 }
 
 //Read input file, create 1D array for travel times
-void init(char* file) {
-    FILE *f = fopen(file, "r");
+void init() {
+    FILE *f = stdin;
     if (f == NULL) {
         printf("Couldn't open file\n");
         exit(1);
@@ -43,7 +42,7 @@ void init(char* file) {
     fscanf(f, "%d", &n);
     
     adjArr = malloc(getNumElements(n) * sizeof(int));
-    char line[256];
+    char line[128];
     int count = 0;
     while (fscanf(f, "%256s", line) == 1) {
         if (line[0] == 'x') {
@@ -57,7 +56,6 @@ void init(char* file) {
 };
 
 struct node {
-    int index;
     int travelTime;
     bool visited;
 };
@@ -71,10 +69,11 @@ int SendMessengers() {
     }
     cities[0].travelTime = 0;
     
+    int adjArrIndex;
     int currIndex = 0;
     int minTime = INT_MAX;
-    int adjArrIndex;
-    while (!MsgSpread(cities)) {
+    int visitCount = 0;
+    while (visitCount < n) {
         currIndex = CityWithLeastTravelTime(cities);
         cities[currIndex].visited = true;
         for (int i = 0; i < n; i++) {
@@ -90,20 +89,9 @@ int SendMessengers() {
                 }
             }
         }
+        visitCount++;
     }
     return cities[currIndex].travelTime;
-}
-
-//Checks to see if the message has been sent to all cities
-bool MsgSpread(node* cities) {
-    bool isSpread = true;
-    for (int i = 0; i < n; i++) {
-        if (!cities[i].visited) {
-            isSpread = false;
-            break;
-        }
-    }
-    return isSpread;
 }
 
 //Chooses an unvisited city with the least travel time
