@@ -2,6 +2,7 @@
 Solution to "Imperial Messengers" problem
 
 This program is reads a text file as input and outputs a solution to the Imperial Messengers challenge.
+I included the shell script (named "program"). Runs with the included text file like so -> ./program < input.txt
 
 Imperial Messengers challenge:
 An empire has certain number of cities and has a network of limitless messengers set up between the cities. The challenge is to find the least amount of time required for all cities to receive the message.
